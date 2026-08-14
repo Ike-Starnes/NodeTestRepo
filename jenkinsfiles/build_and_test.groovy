@@ -19,7 +19,7 @@ pipeline {
     }
 
     environment {
-        GIT_REPO = 'https://github.com/XodoDocs/webviewer'
+        GIT_REPO = 'https://github.com/IsaacStarnes/NodeTestRepo'
     }
 
     stages {
