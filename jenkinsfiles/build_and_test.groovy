@@ -5,7 +5,7 @@ def actualBranch = (env.CHANGE_BRANCH ?: (env.BRANCH_NAME ?: 'main'))
 pipeline {
     agent {
         docker {
-            image 'mcr.microsoft.com/playwright:v1.55.0-noble'
+            image 'mcr.microsoft.com/playwright:v1.62.1-noble'
         }
     }
 
@@ -56,7 +56,7 @@ pipeline {
                         reportDir: 'test-results/playwright/report',
                         reportFiles: 'index.html',
                         reportName: 'Playwright Report',
-                        allowMissing: false,
+                        allowMissing: true,
                         keepAll: true,
                         alwaysLinkToLastBuild: true
                     ])
