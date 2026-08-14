@@ -16,5 +16,10 @@
   "jest-junit": {
     "outputDirectory": "test-results",
     "outputName": "junit.xml"
+  },
+    "jest": {
+      "roots": [
+        "<rootDir>/test"
+      ]
   }
 }

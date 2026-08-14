@@ -1,7 +1,7 @@
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
-  testDir: './tests',
+  testDir: './playwright',
 
   outputDir: 'playwright-artifacts',
 
@@ -11,7 +11,7 @@ module.exports = defineConfig({
       outputFile: 'test-results/playwright/playwright-junit.xml'
     }],
     ['html', {
-      outputFolder: 'test-results/playwright/report',
+      outputFolder: 'playwright-report',
       open: 'never'
     }]
   ]
