@@ -4,9 +4,12 @@
   "description": "Minimal Node.js app with JUnit test output",
   "main": "app.js",
   "scripts": {
-    "test": "jest --ci --reporters=default --reporters=jest-junit"
+    "test": "jest --ci --reporters=default --reporters=jest-junit",
+    "test:e2e": "playwright test",
+    "test:all": "npm test && npm run test:e2e"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "jest": "^30.0.0",
     "jest-junit": "^16.0.0"
   },

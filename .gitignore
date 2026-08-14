@@ -2,8 +2,10 @@
 node_modules/
 
 # Test reports
-/test-results
 junit.xml
+test-results/
+playwright-report/
+playwright-artifacts/
 
 # Logs
 *.log

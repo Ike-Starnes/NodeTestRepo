@@ -34,7 +34,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('src/minimal-node-app') {
-                    sh 'npm install'
+                    sh 'npm ci'
+                    sh 'npx playwright install --with-deps'
                 }
             }
         }
@@ -42,7 +43,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 dir('src/minimal-node-app') {
-                    sh 'npm test'
+                    sh 'npm run test:all'
                 }
             }
         }
@@ -50,8 +51,16 @@ pipeline {
     post {
         always {
             script {
-                if (fileExists('src/minimal-node-app/test-results')) {
-                    junit testResults: 'src/minimal-node-app/test-results/**/*.xml', allowEmptyResults: true
+                dir('src/minimal-node-app') {
+                    junit testResults: 'test-results/**/*.xml', allowEmptyResults: true
+                    publishHTML([
+                        reportDir: 'test-results/playwright/report',
+                        reportFiles: 'index.html',
+                        reportName: 'Playwright Report'
+                        allowMissing: false,
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true
+                    ])
                 }
             }
         }
