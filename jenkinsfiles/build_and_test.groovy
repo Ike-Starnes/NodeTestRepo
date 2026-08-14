@@ -3,11 +3,9 @@
 def actualBranch = (env.CHANGE_BRANCH ?: (env.BRANCH_NAME ?: 'main'))
 
 pipeline {
-    //Change this when we get dedicated performance test agent
-    //agent { label 'webviewer-performance-vm' }
     agent {
         docker {
-            image 'node:20.19.0'
+            image 'mcr.microsoft.com/playwright:v1.55.0-noble'
         }
     }
 
@@ -56,7 +54,7 @@ pipeline {
                     publishHTML([
                         reportDir: 'test-results/playwright/report',
                         reportFiles: 'index.html',
-                        reportName: 'Playwright Report'
+                        reportName: 'Playwright Report',
                         allowMissing: false,
                         keepAll: true,
                         alwaysLinkToLastBuild: true
