@@ -7,9 +7,7 @@ pipeline {
     //agent { label 'webviewer-performance-vm' }
     agent {
         docker {
-            image 'webviewer-tests:latest'
-            registryUrl 'https://448036597521.dkr.ecr.us-west-1.amazonaws.com'
-            registryCredentialsId 'ecr:us-west-1:instance-ecr-pull-role'
+            image 'node:20.19.0'
         }
     }
 
