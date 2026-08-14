@@ -1,0 +1,17 @@
+{
+  "name": "minimal-node-app",
+  "version": "1.0.0",
+  "description": "Minimal Node.js app with JUnit test output",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest --ci --reporters=default --reporters=jest-junit"
+  },
+  "devDependencies": {
+    "jest": "^30.0.0",
+    "jest-junit": "^16.0.0"
+  },
+  "jest-junit": {
+    "outputDirectory": "test-results",
+    "outputName": "junit.xml"
+  }
+}
