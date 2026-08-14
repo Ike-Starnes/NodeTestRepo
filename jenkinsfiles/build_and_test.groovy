@@ -18,6 +18,7 @@ pipeline {
 
     environment {
         GIT_REPO = 'https://github.com/IsaacStarnes/NodeTestRepo'
+        NPM_CONFIG_CACHE = "${WORKSPACE}/.npm"
     }
 
     stages {
@@ -33,7 +34,7 @@ pipeline {
             steps {
                 dir('src/minimal-node-app') {
                     sh 'npm ci'
-                    sh 'npx playwright install --with-deps'
+                    //sh 'npx playwright install --with-deps'
                 }
             }
         }
