@@ -17,9 +17,12 @@
     "outputDirectory": "test-results",
     "outputName": "junit.xml"
   },
-    "jest": {
-      "roots": [
-        "<rootDir>/test"
-      ]
+  "jest": {
+    "roots": [
+      "<rootDir>/test"
+    ]
+  },
+  "dependencies": {
+    "playwright": "^1.62.1"
   }
 }
