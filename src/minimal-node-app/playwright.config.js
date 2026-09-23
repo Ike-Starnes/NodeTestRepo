@@ -11,6 +11,9 @@ module.exports = defineConfig({
     ['html', {
       outputFolder: 'test-results/playwright/report',
       open: 'never'
-    }]
+    }],
+    ['allure-playwright',
+      { resultsDir: 'test-results' }
+    ]
   ]
 });
