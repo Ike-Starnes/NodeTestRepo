@@ -51,6 +51,11 @@ pipeline {
         always {
             script {
                 dir('src/minimal-node-app') {
+                    def allureResults = []
+                    allureResults << [
+                        path: 'test-results'
+                    ]
+                    allure(includeProperties: false, results: allureResults)
                     junit testResults: 'test-results/**/*.xml', allowEmptyResults: true
                     publishHTML([
                         reportDir: 'test-results/playwright/report',
