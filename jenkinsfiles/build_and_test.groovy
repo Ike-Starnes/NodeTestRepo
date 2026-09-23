@@ -12,7 +12,7 @@ pipeline {
     options {
         quietPeriod(60)
         disableConcurrentBuilds()
-        timeout(time: 3, unit: 'HOURS')
+        timeout(time: 5, unit: 'MINUTES')
         skipDefaultCheckout()
     }
 
