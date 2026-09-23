@@ -43,6 +43,12 @@ pipeline {
             steps {
                 dir('src/minimal-node-app') {
                     sh 'npm run test:all'
+
+                    sh '''
+                        echo "===== TEST RESULTS ====="
+                        find test-results -type f | sort
+                    '''
+
                     stash name: 'test-results', includes: "test-results/**/*", allowEmpty: true
                 }
             }
@@ -54,6 +60,15 @@ pipeline {
                 script {
                     dir('unstash') {
                         unstash 'test-results'
+
+                        sh '''
+                            echo "=== Current Directory ==="
+                            pwd
+
+                            echo "=== Files ==="
+                            find . -type f | sort
+                        '''
+
                         def allureResults = []
                         allureResults << [
                             path: 'test-results'

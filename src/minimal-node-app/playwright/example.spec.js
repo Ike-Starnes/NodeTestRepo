@@ -1,5 +1,4 @@
 const { test, expect } = require('@playwright/test');
-const { allure } = require('allure-playwright');
 const fs = require('fs');
 
 test('Download PNG directly', async ({ request }, testInfo) => {
