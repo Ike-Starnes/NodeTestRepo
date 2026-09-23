@@ -43,7 +43,7 @@ pipeline {
             steps {
                 dir('src/minimal-node-app') {
                     sh 'npm run test:all'
-                    stash name: 'test-results', includes: "${archiveFolder}/**/*", allowEmpty: true
+                    stash name: 'test-results', includes: "test-results/**/*", allowEmpty: true
                 }
             }
         }
