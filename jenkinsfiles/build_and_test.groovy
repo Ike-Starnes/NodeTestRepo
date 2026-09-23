@@ -43,29 +43,33 @@ pipeline {
             steps {
                 dir('src/minimal-node-app') {
                     sh 'npm run test:all'
+                    stash name: 'test-results', includes: "${archiveFolder}/**/*", allowEmpty: true
                 }
             }
         }
     }
     post {
         always {
-            script {
-                dir('src/minimal-node-app') {
-                    def allureResults = []
-                    allureResults << [
-                        path: 'test-results'
-                    ]
-                    allure(includeProperties: false, results: allureResults)
-                    junit testResults: 'test-results/**/*.xml', allowEmptyResults: true
-                    publishHTML([
-                        reportDir: 'test-results/playwright/report',
-                        reportFiles: 'index.html',
-                        reportName: 'Playwright Report',
-                        allowMissing: true,
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true,
-                        useWrapperFileDirectly: true
-                    ])
+            node('linux_fleet') {
+                script {
+                    dir('unstash') {
+                        unstash 'test-results'
+                        def allureResults = []
+                        allureResults << [
+                            path: 'test-results'
+                        ]
+                        allure(includeProperties: false, results: allureResults)
+                        junit testResults: 'test-results/**/*.xml', allowEmptyResults: true
+                        publishHTML([
+                            reportDir: 'test-results/playwright/report',
+                            reportFiles: 'index.html',
+                            reportName: 'Playwright Report',
+                            allowMissing: true,
+                            keepAll: true,
+                            alwaysLinkToLastBuild: true,
+                            useWrapperFileDirectly: true
+                        ])
+                    }
                 }
             }
         }
