@@ -27,8 +27,12 @@ test('opens leadtools.com', async ({ page }) => {
 
 test('Download PDF directly', async ({ request }, testInfo) => {
   const response = await request.get(
-    'https://file-examples.com/storage/fec4c232896ab451f9aa14b/2017/10/file-sample_150kB.pdf'
+    'https://samplelib.com/pdf/sample1.pdf'
   );
+
+  console.log("Status:", response.status());
+  console.log("Status Text:", response.statusText());
+  console.log("URL:", response.url());
 
   expect(response.ok()).toBeTruthy();
 
