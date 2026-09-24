@@ -59,16 +59,9 @@ pipeline {
             node('linux_fleet') {
                 script {
                     dir('unstash') {
+                        echo 'Before unstash'
                         unstash 'test-results'
-
-                        sh '''
-                            echo "=== Current Directory ==="
-                            pwd
-
-                            echo "=== Files ==="
-                            find . -type f | sort
-                        '''
-
+                        echo 'After unstash'
                         def allureResults = []
                         allureResults << [
                             path: 'test-results'
