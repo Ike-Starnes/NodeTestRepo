@@ -24,3 +24,22 @@ test('opens leadtools.com', async ({ page }) => {
   await page.goto('https://leadtools.com');
   await expect(page).toHaveTitle(/LEADTOOLS/);
 });
+
+test('Download PDF directly', async ({ request }, testInfo) => {
+  const response = await request.get(
+    'https://file-examples.com/storage/fec4c232896ab451f9aa14b/2017/10/file-sample_150kB.pdf'
+  );
+
+  expect(response.ok()).toBeTruthy();
+
+  const buffer = await response.body();
+  fs.writeFileSync('downloaded-document.pdf', buffer);
+
+  // Attach to Allure report
+  await testInfo.attach('Downloaded PDF', {
+    body: buffer,
+    contentType: 'application/pdf',
+  });
+
+  console.log('PDF saved as downloaded-document.pdf');
+});
