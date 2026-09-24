@@ -3,11 +3,7 @@
 def actualBranch = (env.CHANGE_BRANCH ?: (env.BRANCH_NAME ?: 'main'))
 
 pipeline {
-    agent {
-        docker {
-            image 'mcr.microsoft.com/playwright:v1.63.0-noble'
-        }
-    }
+    agent none
 
     options {
         quietPeriod(60)
@@ -22,34 +18,44 @@ pipeline {
     }
 
     stages {
-        stage('Checkout Repo') {
-            steps {
-                script {
-                    gitCheckout(repo: env.GIT_REPO, branch: actualBranch, skipTriggerCheck: true)
+        stage('Build and Test') {
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/playwright:v1.63.0-noble'
                 }
             }
-        }
 
-        stage('Install Dependencies') {
-            steps {
-                dir('src/minimal-node-app') {
-                    sh 'npm ci'
-                    //sh 'npx playwright install --with-deps'
+            stages {
+                stage('Checkout Repo') {
+                    steps {
+                        script {
+                            gitCheckout(repo: env.GIT_REPO, branch: actualBranch, skipTriggerCheck: true)
+                        }
+                    }
                 }
-            }
-        }
 
-        stage('Run Tests') {
-            steps {
-                dir('src/minimal-node-app') {
-                    sh 'npm run test:all'
+                stage('Install Dependencies') {
+                    steps {
+                        dir('src/minimal-node-app') {
+                            sh 'npm ci'
+                            //sh 'npx playwright install --with-deps'
+                        }
+                    }
+                }
 
-                    sh '''
-                        echo "===== TEST RESULTS ====="
-                        find test-results -type f | sort
-                    '''
+                stage('Run Tests') {
+                    steps {
+                        dir('src/minimal-node-app') {
+                            sh 'npm run test:all'
 
-                    stash name: 'test-results', includes: "test-results/**/*", allowEmpty: true
+                            sh '''
+                                echo "===== TEST RESULTS ====="
+                                find test-results -type f | sort
+                            '''
+
+                            stash name: 'test-results', includes: "test-results/**/*", allowEmpty: true
+                        }
+                    }
                 }
             }
         }
