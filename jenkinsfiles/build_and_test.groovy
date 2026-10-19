@@ -54,6 +54,16 @@ pipeline {
                             '''
 
                             stash name: 'test-results', includes: "test-results/**/*", allowEmpty: true
+
+                            publishHTML([
+                                reportDir: 'test-results/playwright/report',
+                                reportFiles: 'index.html',
+                                reportName: 'Playwright Report',
+                                allowMissing: true,
+                                keepAll: true,
+                                alwaysLinkToLastBuild: true,
+                                useWrapperFileDirectly: true
+                            ])
                         }
                     }
                 }
