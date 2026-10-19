@@ -74,16 +74,25 @@ pipeline {
                         ]
                         allure(includeProperties: false, results: allureResults)
                         junit testResults: 'test-results/**/*.xml', allowEmptyResults: true
-                        publishHTML([
-                            reportDir: 'test-results/playwright/report',
-                            reportFiles: 'index.html',
-                            reportName: 'Playwright Report',
-                            allowMissing: true,
-                            keepAll: true,
-                            alwaysLinkToLastBuild: true,
-                            useWrapperFileDirectly: true
-                        ])
                     }
+                    publishHTML([
+                        reportDir: 'src/minimal-node-app/test-results/playwright/report',
+                        reportFiles: 'index.html',
+                        reportName: 'Playwright Report',
+                        allowMissing: true,
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        useWrapperFileDirectly: true
+                    ])
+                    publishHTML([
+                        reportDir: 'src/test-html',
+                        reportFiles: 'test-html.html',
+                        reportName: 'LEADTOOLS Website',
+                        allowMissing: true,
+                        keepAll: true,
+                        alwaysLinkToLastBuild: true,
+                        useWrapperFileDirectly: true
+                    ])
                 }
             }
         }
